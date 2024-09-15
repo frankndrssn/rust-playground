@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 fn spawn_camera(mut commands: Commands) {
     commands.spawn(Camera3dBundle {
@@ -13,31 +14,37 @@ fn spawn_basic_scene(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let floor = meshes.add(Plane3d::new(Vec3::Y, Vec2::splat(3.0)));
-    let cube = meshes.add(Cuboid::new(2.0, 0.5, 1.0));
+    let cube = meshes.add(Cuboid::new(1.0, 1.0, 1.0));
 
-    commands.spawn(MaterialMeshBundle {
-        mesh: floor,
-        material: materials.add(Color::srgb(0.2, 0.9, 0.1)),
-        ..default()
-    });
-
-    commands.spawn(MaterialMeshBundle {
-        mesh: cube,
-        material: materials.add(Color::srgb(0.2, 0.3, 0.4)),
-        transform: Transform::from_xyz(0.0, 0.5, 0.0),
-        ..default()
-    });
-
-    commands.spawn(PointLightBundle {
-        point_light: PointLight {
-            intensity: 2_000_000.0,
-            color: Color::srgb(1.0, 0.5, 0.1),
-            shadows_enabled: true,
+    commands
+        .spawn(MaterialMeshBundle {
+            mesh: floor,
+            material: materials.add(Color::srgb(0.22, 0.5, 0.02)),
             ..default()
-        },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
-        ..default()
-    });
+        })
+        .insert(Name::new("Floor"));
+
+    commands
+        .spawn(MaterialMeshBundle {
+            mesh: cube,
+            material: materials.add(Color::srgb(0.737, 0.678, 0.549)),
+            transform: Transform::from_xyz(0.0, 0.5, 0.0),
+            ..default()
+        })
+        .insert(Name::new("Object"));
+
+    commands
+        .spawn(PointLightBundle {
+            point_light: PointLight {
+                intensity: 2_000_000.0,
+                color: Color::srgb(1.0, 0.5, 0.1),
+                shadows_enabled: true,
+                ..default()
+            },
+            transform: Transform::from_xyz(4.0, 8.0, 4.0),
+            ..default()
+        })
+        .insert(Name::new("Point light"));
 }
 
 fn main() {
@@ -53,5 +60,6 @@ fn main() {
             }),
             ..default()
         }))
+        .add_plugins(WorldInspectorPlugin::new())
         .run();
 }
