@@ -69,7 +69,7 @@ fn spawn_basic_scene(
 
 fn main() {
     App::new()
-        .insert_resource(ClearColor(Color::BLACK))
+        .insert_resource(ClearColor(Color::srgb(0.52, 0.8, 0.92)))
         .add_systems(Startup, spawn_basic_scene)
         .add_systems(Startup, spawn_camera)
         .add_plugins(DefaultPlugins.set(WindowPlugin {
