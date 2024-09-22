@@ -1,3 +1,3 @@
 [workspace]
-members = ["axum_tutorial", "bevy_tutorial"]
+members = ["axum_tutorial", "bevy_tutorial", "sprite"]
 resolver = "2"
